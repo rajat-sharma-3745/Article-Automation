@@ -2,14 +2,6 @@ import Article from "../models/Article.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/errorHandler.js";
 
-
-export const createArticle =asyncHandler(async (req, res) => {
-    const article = await Article.create(req.body);
-    res.status(201).json(article);
- 
-});
-
-
 export const getArticles = asyncHandler(async (req, res) => {
   const articles = await Article.find().sort({ createdAt: -1 });
   res.json(articles);
