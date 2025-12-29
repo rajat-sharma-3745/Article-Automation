@@ -7,17 +7,32 @@ const articleSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    slug: {
+    url: {
       type: String,
+      required: true,
       unique: true,
-      index: true,
     },
+    author: {
+      type: String,
+      default: "Unknown",
+    },
+    date: {
+      type: String,
+    },
+    description: {
+      type: String,
+    },
+    image: {
+      type: String,
+    },
+    tags: [
+      {
+        type: String,
+      },
+    ],
     content: {
       type: String,
       required: true,
-    },
-    sourceUrl: {
-      type: String,
     },
     status: {
       type: String,
