@@ -1,10 +1,10 @@
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import {connectDB} from "./config/db.js";
 import articleRoutes from "./routes/article.routes.js";
+import scrapeRoutes from "./routes/scrape.routes.js";
+import { errorMiddleware } from "./middlewares/error.js";
 
-dotenv.config();
 
 const app = express();
 
@@ -16,8 +16,10 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/articles", articleRoutes);
+app.use("/api/scrape", scrapeRoutes);
 
 
+app.use(errorMiddleware)
 const PORT = process.env.PORT || 5000;
 connectDB().then(()=>
 app.listen(PORT, () => {
