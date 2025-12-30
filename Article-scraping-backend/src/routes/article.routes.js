@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get("/", getArticles);
 router.get("/:id", getArticleById);
-router.put("/:id", updateArticle);
+router.patch("/:id", updateArticle);
 router.delete("/:id", deleteArticle);
 
 export default router;
