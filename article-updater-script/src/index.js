@@ -1,4 +1,4 @@
-import { fetchArticles } from "./services/article.service.js";
+import { fetchArticles } from "./services/articleFetcher.js";
 
 const fetchOriginalArticles = async () => {
   const articles = await fetchArticles();
