@@ -30,10 +30,6 @@ const articleSchema = new mongoose.Schema(
         type: String,
       },
     ],
-    content: {
-      type: String,
-      required: true,
-    },
     updatedContent: String,
     status: {
       type: String,
