@@ -34,6 +34,7 @@ const articleSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    updatedContent: String,
     status: {
       type: String,
       enum: ["original", "updated"],
