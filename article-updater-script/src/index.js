@@ -1,8 +1,11 @@
 import { fetchArticles } from "./services/article.service.js";
 
-const run = async () => {
+const fetchOriginalArticles = async () => {
   const articles = await fetchArticles();
-  console.log(`Fetched ${articles.length} articles`);
+  const originalArticles =articles.filter(
+      article => article.status === 'original'
+    );
+  console.log(`Fetched ${originalArticles.length} articles`);
 };
 
-run();
+fetchOriginalArticles();
