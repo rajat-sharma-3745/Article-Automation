@@ -33,10 +33,11 @@ const scrapeArticleContent = async (url) => {
     }
 }
 
-export async function scrapeMultipleArticles(urls) {
+export async function scrapeMultipleArticles(urls, requiredCount = 2) {
   const results = [];
   
   for (const urlObj of urls) {
+    if (results.length === requiredCount) break;
     const content = await scrapeArticleContent(urlObj.url);
     if (content) {
       results.push({

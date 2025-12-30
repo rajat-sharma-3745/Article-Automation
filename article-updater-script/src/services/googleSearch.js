@@ -6,10 +6,10 @@ export const googleSearch = async (query) => {
             key: process.env.GOOGLE_API_KEY,
             cx: process.env.GOOGLE_CX,
             q: query,
-            num: 4,
+            num: 5,
         }
         const { data } = await axios.get(url, { params });
-        const results = data.items.filter((item)=>item.link && !item.link.includes("beyondchats.com")).slice(0,2).map(item => ({
+        const results = data.items.filter((item)=>item.link && !item.link.includes("beyondchats.com")).map(item => ({
             title: item.title,
             url: item.link,
             snippet: item.snippet

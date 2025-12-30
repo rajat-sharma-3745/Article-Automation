@@ -63,7 +63,7 @@ async function processArticle(article) {
         }
 
         console.log('Step 2: Scraping reference articles');
-        const scrapedArticles = await scrapeMultipleArticles(searchResults);
+        const scrapedArticles = await scrapeMultipleArticles(searchResults,2);
 
         if (scrapedArticles.length < 2) {
             console.log('Could not scrape enough articles. Skipping...');

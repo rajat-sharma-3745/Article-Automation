@@ -14,7 +14,7 @@ export async function updateArticle(articleId, rewrittenContent, references) {
     
     const response = await axios.patch(
       `${API_BASE_URL}/articles/${articleId}`,
-      updateData
+      updateData, { timeout: 30000 }
     );
     
     console.log(`Article ${articleId} updated successfully`);
