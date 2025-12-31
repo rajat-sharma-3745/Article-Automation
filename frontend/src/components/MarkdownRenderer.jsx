@@ -8,7 +8,7 @@ const MarkdownRenderer = ({ content }) => {
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
-      className="prose prose-slate max-w-none"
+      // className="prose prose-slate max-w-none"
       components={{
         h1: ({ node, ...props }) => (
           <h1 className="text-3xl font-bold mt-6 mb-4 text-gray-800" {...props} />
