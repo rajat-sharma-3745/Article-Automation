@@ -6,7 +6,7 @@ import Article from "../models/Article.js";
 const router = express.Router();
 
 router.post("/", asyncHandler(async (req, res) => {
-    const count = req.body.count || 5;
+    const count = req.body?.count ?? 5;
 
     console.log(`Scraping ${count} articles...`);
     const scrapedArticles = await scrapeOldestArticles(count);
