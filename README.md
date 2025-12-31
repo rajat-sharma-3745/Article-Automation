@@ -9,6 +9,9 @@ This system consists of three main phases:
 2. **Phase 2**: AI-powered article enhancement pipeline
 3. **Phase 3**: React frontend for article display
 
+Frontend link: https://article-automation.vercel.app \
+Backend link: https://article-automate.vercel.app/
+
 ---
 
 ## 📊 Architecture Diagram
