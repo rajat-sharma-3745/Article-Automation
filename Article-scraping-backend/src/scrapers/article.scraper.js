@@ -30,41 +30,73 @@ async function findLastPage() {
     }
 }
 
-
-async function scrapeFullArticleContent(articleUrl) {
+export async function scrapeFullArticleContent(articleUrl) {
     try {
         console.log(`Fetching full content from: ${articleUrl}`);
 
-        const { data } = await axios.get(articleUrl, {
+        const { data: html } = await axios.get(articleUrl, {
             headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
             },
-            timeout: 15000
+            timeout: 15000,
         });
 
-        const dom = new JSDOM(data, { url: articleUrl });
+        const $ = cheerio.load(html);
 
-        const reader = new Readability(dom.window.document);
-        const article = reader.parse();
+        // const $article = $(".elementor-widget-theme-post-content");
+        const $article = $(".elementor-widget-theme-post-content, article, .entry-content, .post-content, main").first();
 
-        if (!article || !article.textContent) {
-            console.log('Readability could not extract content, using fallback...');
-            return 'Content not available';
+        if (!$article.length) {
+            console.warn("Main article container not found");
+            return null;
         }
 
-        const content = article.textContent
+        const contentParts = [];
+
+        $article.children().each((_, el) => {
+            const tag = el.tagName?.toLowerCase();
+
+            if (["h2", "h3", "h4"].includes(tag)) {
+                const text = $(el).text().trim();
+                if (text) contentParts.push(`\n## ${text}\n`);
+            }
+
+            if (tag === "p") {
+                const text = $(el).text().trim();
+                if (text.length > 20) {
+                    contentParts.push(text);
+                }
+            }
+
+            if (tag === "ol" || tag === "ul") {
+                $(el)
+                    .find("li")
+                    .each((i, li) => {
+                        const text = $(li).text().trim();
+                        if (text) {
+                            contentParts.push(`- ${text}`);
+                        }
+                    });
+            }
+        });
+
+        const finalContent = contentParts.join("\n\n").trim();
+
+        const content = finalContent
             .replace(/\s+\n/g, "\n")
             .replace(/\n\s+/g, "\n")
             .split(/\n{2,}/)
             .map(p => p.trim())
             .filter(Boolean)
             .join("\n\n");
-        console.log(`Extracted ${content.length} characters from article`);
-        return content;
 
+        return content || finalContent || null;
     } catch (error) {
-        console.error(`Error scraping article content from ${articleUrl}:`, error.message);
-        return 'Content could not be extracted';
+        console.error(
+            `Error scraping article content from ${articleUrl}:`,
+            error.message
+        );
+        return null;
     }
 }
 
