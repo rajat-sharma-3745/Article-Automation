@@ -1,9 +1,6 @@
 import axios from 'axios'
 import * as cheerio from 'cheerio'
 import { ApiError } from '../utils/errorHandler.js';
-import { Readability } from '@mozilla/readability'
-import { JSDOM } from 'jsdom'
-
 
 const BASE_URL = 'https://beyondchats.com/blogs';
 const ARTICLES_TO_SCRAPE = 5;
